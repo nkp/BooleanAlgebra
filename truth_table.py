@@ -29,7 +29,7 @@
 ### Constants
 OP_OR = '+'             # Character for the boolean OR operator.
 OP_AND = '.'            # Boolean AND operator.
-OP_NOT = '!'            # Boolean negation.
+OP_NOT = '\''            # Boolean negation.
 
 T_LBRACKET = '('        # Left bracket token
 T_RBRACKET = ')'        # Right bracket token
@@ -44,7 +44,7 @@ IDENTIFIERS = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 
 OPERATORS = (OP_OR, OP_AND, OP_NOT)
 
 PRECEDENCE = {OP_NOT: 2, OP_AND: 1, OP_OR: 0}
-ASSOCIATION = {OP_NOT: ASSOC_RIGHT, OP_OR: ASSOC_LEFT, OP_AND: ASSOC_LEFT}
+ASSOCIATION = {OP_NOT: ASSOC_LEFT, OP_OR: ASSOC_LEFT, OP_AND: ASSOC_LEFT}
 
 class MismatchedBracketError(Exception):
     def __init__(self, message='No matching bracket found.'):
