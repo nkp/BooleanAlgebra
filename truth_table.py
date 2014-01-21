@@ -30,6 +30,7 @@
 OP_OR = '+'             # Character for the boolean OR operator.
 OP_AND = '.'            # Boolean AND operator.
 OP_NOT = '\''            # Boolean negation.
+OP_XOR = '^'
 
 T_LBRACKET = '('        # Left bracket token
 T_RBRACKET = ')'        # Right bracket token
@@ -41,10 +42,11 @@ ASSOC_RIGHT = 260       # Right association
 
 # Characters denoting identifiers.
 IDENTIFIERS = ('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
-OPERATORS = (OP_OR, OP_AND, OP_NOT)
+OPERATORS = (OP_OR, OP_XOR, OP_AND, OP_NOT)
 
-PRECEDENCE = {OP_NOT: 2, OP_AND: 1, OP_OR: 0}
-ASSOCIATION = {OP_NOT: ASSOC_LEFT, OP_OR: ASSOC_LEFT, OP_AND: ASSOC_LEFT}
+PRECEDENCE = dict(zip(OPERATORS, range(len(OPERATORS))))
+ASSOCIATION = {OP_NOT: ASSOC_LEFT, OP_OR: ASSOC_LEFT, OP_XOR: ASSOC_LEFT,
+                OP_AND: ASSOC_LEFT}
 
 class MismatchedBracketError(Exception):
     def __init__(self, message='No matching bracket found.'):
@@ -128,6 +130,10 @@ def evaluate(stack, op):
         b = stack.pop()
         a = stack.pop()
         stack.append(a and b)
+    elif op == OP_XOR:
+        b = stack.pop()
+        a = stack.pop()
+        stack.append((a and (not b)) or ((not a) and b))
     elif op == OP_NOT:
         stack.append(not stack.pop())
 
